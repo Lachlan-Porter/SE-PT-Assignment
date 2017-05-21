@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -374,107 +374,6 @@ module.exports = {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(26);
-
-var PROTECTION_PREFIX = /^\)\]\}',?\n/;
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(3);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(3);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      data = data.replace(PROTECTION_PREFIX, '');
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMehtodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10734,6 +10633,107 @@ return jQuery;
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(26);
+
+var PROTECTION_PREFIX = /^\)\]\}',?\n/;
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(3);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(3);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      data = data.replace(PROTECTION_PREFIX, '');
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMehtodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11201,9 +11201,9 @@ process.umask = function() { return 0; };
 
 window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 
+__webpack_require__(30);
+__webpack_require__(31);
 __webpack_require__(29);
-__webpack_require__(43);
-__webpack_require__(44);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -11225,7 +11225,7 @@ $(document).ready(function () {
 
   $('#time').mask('99:99', { placeholder: 'hh:mm' });
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 10 */
@@ -11249,7 +11249,7 @@ module.exports = __webpack_require__(12);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(7);
 var Axios = __webpack_require__(14);
-var defaults = __webpack_require__(1);
+var defaults = __webpack_require__(2);
 
 /**
  * Create an instance of Axios
@@ -11369,7 +11369,7 @@ module.exports = CancelToken;
 "use strict";
 
 
-var defaults = __webpack_require__(1);
+var defaults = __webpack_require__(2);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(15);
 var dispatchRequest = __webpack_require__(16);
@@ -11523,7 +11523,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(19);
 var isCancel = __webpack_require__(5);
-var defaults = __webpack_require__(1);
+var defaults = __webpack_require__(2);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -12078,8 +12078,53 @@ module.exports = function spread(callback) {
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function($) {// Source: https://www.snip2code.com/Snippet/534282/Laravel-5---Use-anchor-links-for-DELETE-
+// Modified to use data-method attribute
+anchorMethod = {
+    init: function init() {
+        $('a[data-method]').on('click', function (e) {
+            e.preventDefault();
+            var link = $(this);
+            var httpMethod = link.data('method').toUpperCase();
+            var form;
 
-window._ = __webpack_require__(31);
+            if ($.inArray(httpMethod, ['PUT', 'DELETE']) === -1) {
+                return;
+            }
+
+            anchorMethod.submit(link);
+        });
+    },
+
+    submit: function submit(link) {
+        var form = $('<form>', {
+            'method': 'POST',
+            'action': link.attr('href')
+        });
+
+        var token = $('<input>', {
+            'type': 'hidden',
+            'name': '_token',
+            'value': $('meta[name="csrf-token"]').attr('content')
+        });
+
+        var hiddenInput = $('<input>', {
+            'name': '_method',
+            'type': 'hidden',
+            'value': link.data('method')
+        });
+
+        form.append(token, hiddenInput).appendTo('body').submit();
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+window._ = __webpack_require__(33);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -12087,7 +12132,7 @@ window._ = __webpack_require__(31);
  * code may be modified to fit the specific needs of your application.
  */
 
-window.$ = window.jQuery = __webpack_require__(2);
+window.$ = window.jQuery = __webpack_require__(1);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -12123,10 +12168,216 @@ window.axios.defaults.headers.common = {
 //     key: 'your-pusher-key'
 // });
 
-__webpack_require__(30);
+__webpack_require__(32);
 
 /***/ }),
-/* 30 */
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/*
+    jQuery Masked Input Plugin
+    Copyright (c) 2007 - 2015 Josh Bush (digitalbush.com)
+    Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license)
+    Version: 1.4.1
+*/
+!function (factory) {
+     true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : factory("object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ? require("jquery") : jQuery);
+}(function ($) {
+    var caretTimeoutId,
+        ua = navigator.userAgent,
+        iPhone = /iphone/i.test(ua),
+        chrome = /chrome/i.test(ua),
+        android = /android/i.test(ua);
+    $.mask = {
+        definitions: {
+            "9": "[0-9]",
+            a: "[A-Za-z]",
+            "*": "[A-Za-z0-9]"
+        },
+        autoclear: !0,
+        dataName: "rawMaskFn",
+        placeholder: "_"
+    }, $.fn.extend({
+        caret: function caret(begin, end) {
+            var range;
+            if (0 !== this.length && !this.is(":hidden")) return "number" == typeof begin ? (end = "number" == typeof end ? end : begin, this.each(function () {
+                this.setSelectionRange ? this.setSelectionRange(begin, end) : this.createTextRange && (range = this.createTextRange(), range.collapse(!0), range.moveEnd("character", end), range.moveStart("character", begin), range.select());
+            })) : (this[0].setSelectionRange ? (begin = this[0].selectionStart, end = this[0].selectionEnd) : document.selection && document.selection.createRange && (range = document.selection.createRange(), begin = 0 - range.duplicate().moveStart("character", -1e5), end = begin + range.text.length), {
+                begin: begin,
+                end: end
+            });
+        },
+        unmask: function unmask() {
+            return this.trigger("unmask");
+        },
+        mask: function mask(_mask, settings) {
+            var input, defs, tests, partialPosition, firstNonMaskPos, lastRequiredNonMaskPos, len, oldVal;
+            if (!_mask && this.length > 0) {
+                input = $(this[0]);
+                var fn = input.data($.mask.dataName);
+                return fn ? fn() : void 0;
+            }
+            return settings = $.extend({
+                autoclear: $.mask.autoclear,
+                placeholder: $.mask.placeholder,
+                completed: null
+            }, settings), defs = $.mask.definitions, tests = [], partialPosition = len = _mask.length, firstNonMaskPos = null, $.each(_mask.split(""), function (i, c) {
+                "?" == c ? (len--, partialPosition = i) : defs[c] ? (tests.push(new RegExp(defs[c])), null === firstNonMaskPos && (firstNonMaskPos = tests.length - 1), partialPosition > i && (lastRequiredNonMaskPos = tests.length - 1)) : tests.push(null);
+            }), this.trigger("unmask").each(function () {
+                function tryFireCompleted() {
+                    if (settings.completed) {
+                        for (var i = firstNonMaskPos; lastRequiredNonMaskPos >= i; i++) {
+                            if (tests[i] && buffer[i] === getPlaceholder(i)) return;
+                        }settings.completed.call(input);
+                    }
+                }
+                function getPlaceholder(i) {
+                    return settings.placeholder.charAt(i < settings.placeholder.length ? i : 0);
+                }
+                function seekNext(pos) {
+                    for (; ++pos < len && !tests[pos];) {}
+                    return pos;
+                }
+                function seekPrev(pos) {
+                    for (; --pos >= 0 && !tests[pos];) {}
+                    return pos;
+                }
+                function shiftL(begin, end) {
+                    var i, j;
+                    if (!(0 > begin)) {
+                        for (i = begin, j = seekNext(end); len > i; i++) {
+                            if (tests[i]) {
+                                if (!(len > j && tests[i].test(buffer[j]))) break;
+                                buffer[i] = buffer[j], buffer[j] = getPlaceholder(j), j = seekNext(j);
+                            }
+                        }writeBuffer(), input.caret(Math.max(firstNonMaskPos, begin));
+                    }
+                }
+                function shiftR(pos) {
+                    var i, c, j, t;
+                    for (i = pos, c = getPlaceholder(pos); len > i; i++) {
+                        if (tests[i]) {
+                            if (j = seekNext(i), t = buffer[i], buffer[i] = c, !(len > j && tests[j].test(t))) break;
+                            c = t;
+                        }
+                    }
+                }
+                function androidInputEvent() {
+                    var curVal = input.val(),
+                        pos = input.caret();
+                    if (oldVal && oldVal.length && oldVal.length > curVal.length) {
+                        for (checkVal(!0); pos.begin > 0 && !tests[pos.begin - 1];) {
+                            pos.begin--;
+                        }if (0 === pos.begin) for (; pos.begin < firstNonMaskPos && !tests[pos.begin];) {
+                            pos.begin++;
+                        }input.caret(pos.begin, pos.begin);
+                    } else {
+                        for (checkVal(!0); pos.begin < len && !tests[pos.begin];) {
+                            pos.begin++;
+                        }input.caret(pos.begin, pos.begin);
+                    }
+                    tryFireCompleted();
+                }
+                function blurEvent() {
+                    checkVal(), input.val() != focusText && input.change();
+                }
+                function keydownEvent(e) {
+                    if (!input.prop("readonly")) {
+                        var pos,
+                            begin,
+                            end,
+                            k = e.which || e.keyCode;
+                        oldVal = input.val(), 8 === k || 46 === k || iPhone && 127 === k ? (pos = input.caret(), begin = pos.begin, end = pos.end, end - begin === 0 && (begin = 46 !== k ? seekPrev(begin) : end = seekNext(begin - 1), end = 46 === k ? seekNext(end) : end), clearBuffer(begin, end), shiftL(begin, end - 1), e.preventDefault()) : 13 === k ? blurEvent.call(this, e) : 27 === k && (input.val(focusText), input.caret(0, checkVal()), e.preventDefault());
+                    }
+                }
+                function keypressEvent(e) {
+                    if (!input.prop("readonly")) {
+                        var p,
+                            c,
+                            next,
+                            k = e.which || e.keyCode,
+                            pos = input.caret();
+                        if (!(e.ctrlKey || e.altKey || e.metaKey || 32 > k) && k && 13 !== k) {
+                            if (pos.end - pos.begin !== 0 && (clearBuffer(pos.begin, pos.end), shiftL(pos.begin, pos.end - 1)), p = seekNext(pos.begin - 1), len > p && (c = String.fromCharCode(k), tests[p].test(c))) {
+                                if (shiftR(p), buffer[p] = c, writeBuffer(), next = seekNext(p), android) {
+                                    var proxy = function proxy() {
+                                        $.proxy($.fn.caret, input, next)();
+                                    };
+                                    setTimeout(proxy, 0);
+                                } else input.caret(next);
+                                pos.begin <= lastRequiredNonMaskPos && tryFireCompleted();
+                            }
+                            e.preventDefault();
+                        }
+                    }
+                }
+                function clearBuffer(start, end) {
+                    var i;
+                    for (i = start; end > i && len > i; i++) {
+                        tests[i] && (buffer[i] = getPlaceholder(i));
+                    }
+                }
+                function writeBuffer() {
+                    input.val(buffer.join(""));
+                }
+                function checkVal(allow) {
+                    var i,
+                        c,
+                        pos,
+                        test = input.val(),
+                        lastMatch = -1;
+                    for (i = 0, pos = 0; len > i; i++) {
+                        if (tests[i]) {
+                            for (buffer[i] = getPlaceholder(i); pos++ < test.length;) {
+                                if (c = test.charAt(pos - 1), tests[i].test(c)) {
+                                    buffer[i] = c, lastMatch = i;
+                                    break;
+                                }
+                            }if (pos > test.length) {
+                                clearBuffer(i + 1, len);
+                                break;
+                            }
+                        } else buffer[i] === test.charAt(pos) && pos++, partialPosition > i && (lastMatch = i);
+                    }return allow ? writeBuffer() : partialPosition > lastMatch + 1 ? settings.autoclear || buffer.join("") === defaultBuffer ? (input.val() && input.val(""), clearBuffer(0, len)) : writeBuffer() : (writeBuffer(), input.val(input.val().substring(0, lastMatch + 1))), partialPosition ? i : firstNonMaskPos;
+                }
+                var input = $(this),
+                    buffer = $.map(_mask.split(""), function (c, i) {
+                    return "?" != c ? defs[c] ? getPlaceholder(i) : c : void 0;
+                }),
+                    defaultBuffer = buffer.join(""),
+                    focusText = input.val();
+                input.data($.mask.dataName, function () {
+                    return $.map(buffer, function (c, i) {
+                        return tests[i] && c != getPlaceholder(i) ? c : null;
+                    }).join("");
+                }), input.one("unmask", function () {
+                    input.off(".mask").removeData($.mask.dataName);
+                }).on("focus.mask", function () {
+                    if (!input.prop("readonly")) {
+                        clearTimeout(caretTimeoutId);
+                        var pos;
+                        focusText = input.val(), pos = checkVal(), caretTimeoutId = setTimeout(function () {
+                            input.get(0) === document.activeElement && (writeBuffer(), pos == _mask.replace("?", "").length ? input.caret(0, pos) : input.caret(pos));
+                        }, 10);
+                    }
+                }).on("blur.mask", blurEvent).on("keydown.mask", keydownEvent).on("keypress.mask", keypressEvent).on("input.mask paste.mask", function () {
+                    input.prop("readonly") || setTimeout(function () {
+                        var pos = checkVal(!0);
+                        input.caret(pos), tryFireCompleted();
+                    }, 0);
+                }), chrome && android && input.off("input.mask").on("input.mask", androidInputEvent), checkVal();
+            });
+        }
+    });
+});
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -14507,10 +14758,10 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -31599,10 +31850,10 @@ if (typeof jQuery === 'undefined') {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32), __webpack_require__(33)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(35)(module)))
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports) {
 
 var g;
@@ -31629,7 +31880,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -31657,271 +31908,12 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);
 module.exports = __webpack_require__(10);
 
-
-/***/ }),
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/*
-    jQuery Masked Input Plugin
-    Copyright (c) 2007 - 2015 Josh Bush (digitalbush.com)
-    Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license)
-    Version: 1.4.1
-*/
-!function (factory) {
-     true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : factory("object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ? require("jquery") : jQuery);
-}(function ($) {
-    var caretTimeoutId,
-        ua = navigator.userAgent,
-        iPhone = /iphone/i.test(ua),
-        chrome = /chrome/i.test(ua),
-        android = /android/i.test(ua);
-    $.mask = {
-        definitions: {
-            "9": "[0-9]",
-            a: "[A-Za-z]",
-            "*": "[A-Za-z0-9]"
-        },
-        autoclear: !0,
-        dataName: "rawMaskFn",
-        placeholder: "_"
-    }, $.fn.extend({
-        caret: function caret(begin, end) {
-            var range;
-            if (0 !== this.length && !this.is(":hidden")) return "number" == typeof begin ? (end = "number" == typeof end ? end : begin, this.each(function () {
-                this.setSelectionRange ? this.setSelectionRange(begin, end) : this.createTextRange && (range = this.createTextRange(), range.collapse(!0), range.moveEnd("character", end), range.moveStart("character", begin), range.select());
-            })) : (this[0].setSelectionRange ? (begin = this[0].selectionStart, end = this[0].selectionEnd) : document.selection && document.selection.createRange && (range = document.selection.createRange(), begin = 0 - range.duplicate().moveStart("character", -1e5), end = begin + range.text.length), {
-                begin: begin,
-                end: end
-            });
-        },
-        unmask: function unmask() {
-            return this.trigger("unmask");
-        },
-        mask: function mask(_mask, settings) {
-            var input, defs, tests, partialPosition, firstNonMaskPos, lastRequiredNonMaskPos, len, oldVal;
-            if (!_mask && this.length > 0) {
-                input = $(this[0]);
-                var fn = input.data($.mask.dataName);
-                return fn ? fn() : void 0;
-            }
-            return settings = $.extend({
-                autoclear: $.mask.autoclear,
-                placeholder: $.mask.placeholder,
-                completed: null
-            }, settings), defs = $.mask.definitions, tests = [], partialPosition = len = _mask.length, firstNonMaskPos = null, $.each(_mask.split(""), function (i, c) {
-                "?" == c ? (len--, partialPosition = i) : defs[c] ? (tests.push(new RegExp(defs[c])), null === firstNonMaskPos && (firstNonMaskPos = tests.length - 1), partialPosition > i && (lastRequiredNonMaskPos = tests.length - 1)) : tests.push(null);
-            }), this.trigger("unmask").each(function () {
-                function tryFireCompleted() {
-                    if (settings.completed) {
-                        for (var i = firstNonMaskPos; lastRequiredNonMaskPos >= i; i++) {
-                            if (tests[i] && buffer[i] === getPlaceholder(i)) return;
-                        }settings.completed.call(input);
-                    }
-                }
-                function getPlaceholder(i) {
-                    return settings.placeholder.charAt(i < settings.placeholder.length ? i : 0);
-                }
-                function seekNext(pos) {
-                    for (; ++pos < len && !tests[pos];) {}
-                    return pos;
-                }
-                function seekPrev(pos) {
-                    for (; --pos >= 0 && !tests[pos];) {}
-                    return pos;
-                }
-                function shiftL(begin, end) {
-                    var i, j;
-                    if (!(0 > begin)) {
-                        for (i = begin, j = seekNext(end); len > i; i++) {
-                            if (tests[i]) {
-                                if (!(len > j && tests[i].test(buffer[j]))) break;
-                                buffer[i] = buffer[j], buffer[j] = getPlaceholder(j), j = seekNext(j);
-                            }
-                        }writeBuffer(), input.caret(Math.max(firstNonMaskPos, begin));
-                    }
-                }
-                function shiftR(pos) {
-                    var i, c, j, t;
-                    for (i = pos, c = getPlaceholder(pos); len > i; i++) {
-                        if (tests[i]) {
-                            if (j = seekNext(i), t = buffer[i], buffer[i] = c, !(len > j && tests[j].test(t))) break;
-                            c = t;
-                        }
-                    }
-                }
-                function androidInputEvent() {
-                    var curVal = input.val(),
-                        pos = input.caret();
-                    if (oldVal && oldVal.length && oldVal.length > curVal.length) {
-                        for (checkVal(!0); pos.begin > 0 && !tests[pos.begin - 1];) {
-                            pos.begin--;
-                        }if (0 === pos.begin) for (; pos.begin < firstNonMaskPos && !tests[pos.begin];) {
-                            pos.begin++;
-                        }input.caret(pos.begin, pos.begin);
-                    } else {
-                        for (checkVal(!0); pos.begin < len && !tests[pos.begin];) {
-                            pos.begin++;
-                        }input.caret(pos.begin, pos.begin);
-                    }
-                    tryFireCompleted();
-                }
-                function blurEvent() {
-                    checkVal(), input.val() != focusText && input.change();
-                }
-                function keydownEvent(e) {
-                    if (!input.prop("readonly")) {
-                        var pos,
-                            begin,
-                            end,
-                            k = e.which || e.keyCode;
-                        oldVal = input.val(), 8 === k || 46 === k || iPhone && 127 === k ? (pos = input.caret(), begin = pos.begin, end = pos.end, end - begin === 0 && (begin = 46 !== k ? seekPrev(begin) : end = seekNext(begin - 1), end = 46 === k ? seekNext(end) : end), clearBuffer(begin, end), shiftL(begin, end - 1), e.preventDefault()) : 13 === k ? blurEvent.call(this, e) : 27 === k && (input.val(focusText), input.caret(0, checkVal()), e.preventDefault());
-                    }
-                }
-                function keypressEvent(e) {
-                    if (!input.prop("readonly")) {
-                        var p,
-                            c,
-                            next,
-                            k = e.which || e.keyCode,
-                            pos = input.caret();
-                        if (!(e.ctrlKey || e.altKey || e.metaKey || 32 > k) && k && 13 !== k) {
-                            if (pos.end - pos.begin !== 0 && (clearBuffer(pos.begin, pos.end), shiftL(pos.begin, pos.end - 1)), p = seekNext(pos.begin - 1), len > p && (c = String.fromCharCode(k), tests[p].test(c))) {
-                                if (shiftR(p), buffer[p] = c, writeBuffer(), next = seekNext(p), android) {
-                                    var proxy = function proxy() {
-                                        $.proxy($.fn.caret, input, next)();
-                                    };
-                                    setTimeout(proxy, 0);
-                                } else input.caret(next);
-                                pos.begin <= lastRequiredNonMaskPos && tryFireCompleted();
-                            }
-                            e.preventDefault();
-                        }
-                    }
-                }
-                function clearBuffer(start, end) {
-                    var i;
-                    for (i = start; end > i && len > i; i++) {
-                        tests[i] && (buffer[i] = getPlaceholder(i));
-                    }
-                }
-                function writeBuffer() {
-                    input.val(buffer.join(""));
-                }
-                function checkVal(allow) {
-                    var i,
-                        c,
-                        pos,
-                        test = input.val(),
-                        lastMatch = -1;
-                    for (i = 0, pos = 0; len > i; i++) {
-                        if (tests[i]) {
-                            for (buffer[i] = getPlaceholder(i); pos++ < test.length;) {
-                                if (c = test.charAt(pos - 1), tests[i].test(c)) {
-                                    buffer[i] = c, lastMatch = i;
-                                    break;
-                                }
-                            }if (pos > test.length) {
-                                clearBuffer(i + 1, len);
-                                break;
-                            }
-                        } else buffer[i] === test.charAt(pos) && pos++, partialPosition > i && (lastMatch = i);
-                    }return allow ? writeBuffer() : partialPosition > lastMatch + 1 ? settings.autoclear || buffer.join("") === defaultBuffer ? (input.val() && input.val(""), clearBuffer(0, len)) : writeBuffer() : (writeBuffer(), input.val(input.val().substring(0, lastMatch + 1))), partialPosition ? i : firstNonMaskPos;
-                }
-                var input = $(this),
-                    buffer = $.map(_mask.split(""), function (c, i) {
-                    return "?" != c ? defs[c] ? getPlaceholder(i) : c : void 0;
-                }),
-                    defaultBuffer = buffer.join(""),
-                    focusText = input.val();
-                input.data($.mask.dataName, function () {
-                    return $.map(buffer, function (c, i) {
-                        return tests[i] && c != getPlaceholder(i) ? c : null;
-                    }).join("");
-                }), input.one("unmask", function () {
-                    input.off(".mask").removeData($.mask.dataName);
-                }).on("focus.mask", function () {
-                    if (!input.prop("readonly")) {
-                        clearTimeout(caretTimeoutId);
-                        var pos;
-                        focusText = input.val(), pos = checkVal(), caretTimeoutId = setTimeout(function () {
-                            input.get(0) === document.activeElement && (writeBuffer(), pos == _mask.replace("?", "").length ? input.caret(0, pos) : input.caret(pos));
-                        }, 10);
-                    }
-                }).on("blur.mask", blurEvent).on("keydown.mask", keydownEvent).on("keypress.mask", keypressEvent).on("input.mask paste.mask", function () {
-                    input.prop("readonly") || setTimeout(function () {
-                        var pos = checkVal(!0);
-                        input.caret(pos), tryFireCompleted();
-                    }, 0);
-                }), chrome && android && input.off("input.mask").on("input.mask", androidInputEvent), checkVal();
-            });
-        }
-    });
-});
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {// Source: https://www.snip2code.com/Snippet/534282/Laravel-5---Use-anchor-links-for-DELETE-
-// Modified to use data-method attribute
-anchorMethod = {
-    init: function init() {
-        $('a[data-method]').on('click', function (e) {
-            e.preventDefault();
-            var link = $(this);
-            var httpMethod = link.data('method').toUpperCase();
-            var form;
-
-            if ($.inArray(httpMethod, ['PUT', 'DELETE']) === -1) {
-                return;
-            }
-
-            anchorMethod.submit(link);
-        });
-    },
-
-    submit: function submit(link) {
-        var form = $('<form>', {
-            'method': 'POST',
-            'action': link.attr('href')
-        });
-
-        var token = $('<input>', {
-            'type': 'hidden',
-            'name': '_token',
-            'value': $('meta[name="csrf-token"]').attr('content')
-        });
-
-        var hiddenInput = $('<input>', {
-            'name': '_method',
-            'type': 'hidden',
-            'value': link.data('method')
-        });
-
-        form.append(token, hiddenInput).appendTo('body').submit();
-    }
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ })
 /******/ ]);
